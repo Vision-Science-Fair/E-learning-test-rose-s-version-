@@ -3,22 +3,1378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnNest</title>
-    <link rel="stylesheet" href="style.css">
+    <title>LearnNest - Digital Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="img/i.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #4cc9f0;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --book-green: #2ecc71;
+            --book-blue: #3498db;
+            --book-purple: #9b59b6;
+            --book-orange: #e67e22;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        /* Library Hero */
+        .library-hero {
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9)), 
+                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 140px 20px 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .library-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .library-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Library Content */
+        .library-content {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 18px 60px 18px 25px;
+            border-radius: var(--radius);
+            border: 2px solid #ddd;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Filter & Sort */
+        .filter-sort {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sort-select {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: 2px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-cover {
+            height: 200px;
+            background: linear-gradient(135deg, var(--book-blue), var(--book-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+        }
+
+        .book-icon {
+            font-size: 60px;
+            color: white;
+            z-index: 1;
+        }
+
+        .book-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .book-body {
+            padding: 25px;
+        }
+
+        .book-body h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .book-author {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .book-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .book-pages, .book-size {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .read-btn, .download-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .read-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .read-btn:hover {
+            background: var(--secondary);
+        }
+
+        .download-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .download-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Recently Viewed */
+        .recently-viewed {
+            margin-top: 80px;
+        }
+
+        .recent-books {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+        }
+
+        .recent-book {
+            min-width: 200px;
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .recent-book-cover {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--book-green), var(--book-blue));
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 30px;
+        }
+
+        .recent-book h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .continue-reading {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            font-size: 12px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* Reader Modal */
+        .reader-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .reader-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reader-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reader-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .close-reader {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .reader-body {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            line-height: 1.8;
+        }
+
+        .reader-body h2 {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .reader-body p {
+            margin-bottom: 20px;
+        }
+
+        .reader-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: #f5f5f5;
+            border-top: 1px solid #ddd;
+        }
+
+        .page-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 20px 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--light-blue);
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--light-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 20px;
+            }
+            .library-hero h1 {
+                font-size: 2.8rem;
+            }
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links {
+                margin: 15px 0;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .library-hero {
+                padding: 120px 20px 60px;
+                margin-top: 120px;
+            }
+            .library-hero h1 {
+                font-size: 2.3rem;
+            }
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .filter-sort {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .book-actions {
+                flex-direction: column;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .library-hero h1 {
+                font-size: 2rem;
+            }
+            .stats {
+                gap: 30px;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="home.html">Home</a>
-        <a href="grades.html">Grades</a>
-        <a href="clubs.html">clubs</a>
-        <a href="videos.html">Videos</a>
-        <a href="books.html" class="active">Books</a>
-        <a href="about.html">About</a>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                LearnNest
+            </div>
+            <div class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="grades.html">Grades</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="videos.html">Videos</a>
+                <a href="books.html" class="active">Books</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="log">
+                <a href="signUp.html" class="signup-btn">Sign up</a>
+            </div>
+        </div>
     </nav>
-    <div class="log">
-      <a href="signUp.html">Sign up</a>
+
+    <!-- Library Hero -->
+    <section class="library-hero">
+        <h1>Digital Library</h1>
+        <p>Access thousands of textbooks, reference materials, and educational resources. Read online or download for offline study.</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">2,500+</div>
+                <div class="stat-label">Textbooks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Reference Books</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Subjects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">Free</div>
+                <div class="stat-label">Access for Students</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Content -->
+    <div class="library-content">
+        <!-- Search -->
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search textbooks by title, author, or subject...">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Filter & Sort -->
+        <div class="filter-sort">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Subjects</button>
+                <button class="filter-btn" data-filter="math">Mathematics</button>
+                <button class="filter-btn" data-filter="science">Science</button>
+                <button class="filter-btn" data-filter="history">History</button>
+                <button class="filter-btn" data-filter="english">English</button>
+                <button class="filter-btn" data-filter="computer">Computer Science</button>
+            </div>
+            
+            <select class="sort-select">
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest First</option>
+                <option value="title">Title A-Z</option>
+                <option value="author">Author</option>
+            </select>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid">
+            <!-- Book 1 -->
+            <div class="book-card" data-category="math">
+                <div class="book-cover">
+                    <div class="book-icon">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <span class="book-category">Mathematics</span>
+                </div>
+                <div class="book-body">
+                    <h3>Advanced Mathematics for Grade 11</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        Dr. Robert Johnson
+                    </div>
+                    <div class="book-description">
+                        Comprehensive mathematics textbook covering algebra, trigonometry, and pre-calculus concepts for Grade 11 students.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>450 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>12.5 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="math11">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="math11">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card" data-category="science">
+                <div class="book-cover" style="background: linear-gradient(135deg, var(--book-green), var(--book-blue));">
+                    <div class="book-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <span class="book-category">Science</span>
+                </div>
+                <div class="book-body">
+                    <h3>Physics Fundamentals</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        Prof. Sarah Williams
+                    </div>
+                    <div class="book-description">
+                        Introduction to physics covering motion, forces, energy, and waves with practical examples and exercises.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>380 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>9.8 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="physics">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="physics">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card" data-category="english">
+                <div class="book-cover" style="background: linear-gradient(135deg, var(--book-orange), #f1c40f);">
+                    <div class="book-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <span class="book-category">English</span>
+                </div>
+                <div class="book-body">
+                    <h3>Literature Anthology</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        Dr. Elizabeth Parker
+                    </div>
+                    <div class="book-description">
+                        Collection of classic and contemporary literature with analysis and discussion questions for students.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>520 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>15.2 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="literature">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="literature">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card" data-category="history">
+                <div class="book-cover" style="background: linear-gradient(135deg, #e74c3c, var(--book-orange));">
+                    <div class="book-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <span class="book-category">History</span>
+                </div>
+                <div class="book-body">
+                    <h3>World History: Modern Era</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        Prof. Michael Chen
+                    </div>
+                    <div class="book-description">
+                        Comprehensive overview of world history from 1500 to present day with maps, timelines, and primary sources.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>600 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>18.3 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="history">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="history">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 5 -->
+            <div class="book-card" data-category="computer">
+                <div class="book-cover" style="background: linear-gradient(135deg, #9b59b6, #3498db);">
+                    <div class="book-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <span class="book-category">Computer Science</span>
+                </div>
+                <div class="book-body">
+                    <h3>Introduction to Programming</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        David Rodriguez
+                    </div>
+                    <div class="book-description">
+                        Beginner-friendly guide to programming concepts using Python with practical exercises and projects.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>320 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>8.7 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="programming">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="programming">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 6 -->
+            <div class="book-card" data-category="science">
+                <div class="book-cover" style="background: linear-gradient(135deg, #1abc9c, var(--book-green));">
+                    <div class="book-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <span class="book-category">Science</span>
+                </div>
+                <div class="book-body">
+                    <h3>Biology: Life Sciences</h3>
+                    <div class="book-author">
+                        <i class="fas fa-user-edit"></i>
+                        Dr. Jennifer Miller
+                    </div>
+                    <div class="book-description">
+                        Complete biology textbook covering cell structure, genetics, evolution, and ecology with color illustrations.
+                    </div>
+                    <div class="book-meta">
+                        <div class="book-pages">
+                            <i class="fas fa-file-alt"></i>
+                            <span>480 pages</span>
+                        </div>
+                        <div class="book-size">
+                            <i class="fas fa-download"></i>
+                            <span>14.1 MB</span>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <button class="read-btn" data-book="biology">
+                            <i class="fas fa-book-open"></i> Read Now
+                        </button>
+                        <button class="download-btn" data-book="biology">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recently Viewed -->
+        <div class="recently-viewed">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i>
+                Recently Viewed
+            </h2>
+            
+            <div class="recent-books">
+                <div class="recent-book">
+                    <div class="recent-book-cover">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <h4>Advanced Mathematics</h4>
+                    <p>Page 142 of 450</p>
+                    <button class="continue-reading">Continue Reading</button>
+                </div>
+                
+                <div class="recent-book">
+                    <div class="recent-book-cover">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h4>Physics Fundamentals</h4>
+                    <p>Page 89 of 380</p>
+                    <button class="continue-reading">Continue Reading</button>
+                </div>
+                
+                <div class="recent-book">
+                    <div class="recent-book-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>Literature Anthology</h4>
+                    <p>Chapter 5 of 12</p>
+                    <button class="continue-reading">Continue Reading</button>
+                </div>
+            </div>
+        </div>
     </div>
-<script src="app.js"></script>
+
+    <!-- Reader Modal -->
+    <div class="reader-modal" id="readerModal">
+        <div class="reader-content">
+            <div class="reader-header">
+                <h3 id="readerTitle">Advanced Mathematics for Grade 11</h3>
+                <button class="close-reader" id="closeReader">&times;</button>
+            </div>
+            <div class="reader-body" id="readerBody">
+                <h2>Chapter 1: Algebraic Expressions</h2>
+                <p>Algebra is a branch of mathematics that uses symbols and letters to represent numbers and quantities in formulas and equations. The letters are called variables because they can represent different numbers.</p>
+                
+                <h3>1.1 Variables and Constants</h3>
+                <p>In algebra, we use letters to represent unknown values. These letters are called variables. For example, in the expression 3x + 5, the letter x is a variable. Numbers that have fixed values are called constants. In the same expression, 3 and 5 are constants.</p>
+                
+                <p>Variables allow us to write general rules. For instance, the area of a rectangle can be written as A = l × w, where A represents the area, l represents the length, and w represents the width. This formula works for any rectangle, regardless of its specific measurements.</p>
+                
+                <h3>1.2 Algebraic Expressions</h3>
+                <p>An algebraic expression is a combination of variables, constants, and operations (like addition, subtraction, multiplication, and division). Examples include:</p>
+                <ul>
+                    <li>2x + 3</li>
+                    <li>5y² - 2y + 7</li>
+                    <li>(a + b)(a - b)</li>
+                </ul>
+                
+                <p>Expressions can be simplified by combining like terms. Like terms are terms that have the same variable raised to the same power. For example, in the expression 3x + 2y + 5x - y, the like terms are 3x and 5x, and 2y and -y.</p>
+            </div>
+            <div class="reader-controls">
+                <div class="page-nav">
+                    <button class="page-btn" id="prevPage">Previous Page</button>
+                    <button class="page-btn" id="nextPage">Next Page</button>
+                </div>
+                <div>
+                    <span id="currentPage">Page 1</span> of <span id="totalPages">12</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    LearnNest
+                </div>
+                <p>A Modern Nest For Growing Minds. We provide innovative tools and resources to help students excel in their academic journey.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="grades.html">Grades</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">help@learnnest.com</a></li>
+                        <li><a href="#">+1 (555) 123-4567</a></li>
+                        <li><a href="#">123 Education St.</a></li>
+                        <li><a href="#">Knowledge City, KC 10101</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LearnNest. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for growing minds</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Book filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const bookCards = document.querySelectorAll('.book-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter books
+                    bookCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                bookCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const author = card.querySelector('.book-author').textContent.toLowerCase();
+                    const description = card.querySelector('.book-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || author.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Sort functionality
+            const sortSelect = document.querySelector('.sort-select');
+            sortSelect.addEventListener('change', function() {
+                // In a real app, this would reorder books based on selection
+                alert('Books sorted by: ' + this.value);
+            });
+            
+            // Reader modal
+            const readerModal = document.getElementById('readerModal');
+            const closeReader = document.getElementById('closeReader');
+            const readButtons = document.querySelectorAll('.read-btn');
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            const currentPage = document.getElementById('currentPage');
+            const totalPages = document.getElementById('totalPages');
+            const prevPage = document.getElementById('prevPage');
+            const nextPage = document.getElementById('nextPage');
+            const readerTitle = document.getElementById('readerTitle');
+            const readerBody = document.getElementById('readerBody');
+            
+            let currentPageNumber = 1;
+            const maxPages = 12;
+            
+            // Open reader when Read Now is clicked
+            readButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-book');
+                    const bookCard = this.closest('.book-card');
+                    const bookName = bookCard.querySelector('h3').textContent;
+                    
+                    readerTitle.textContent = bookName;
+                    currentPageNumber = 1;
+                    currentPage.textContent = 'Page ' + currentPageNumber;
+                    totalPages.textContent = maxPages;
+                    
+                    // In a real app, this would load the actual book content
+                    readerBody.innerHTML = `
+                        <h2>${bookName}</h2>
+                        <p>You are now reading "${bookName}". In a real implementation, this would display the actual book content with proper pagination, images, and formatting.</p>
+                        
+                        <h3>Chapter 1: Introduction</h3>
+                        <p>This is sample content for page ${currentPageNumber}. The digital reader would include:</p>
+                        <ul>
+                            <li>Full text of the textbook</li>
+                            <li>Images and diagrams</li>
+                            <li>Interactive elements</li>
+                            <li>Bookmarking functionality</li>
+                            <li>Search within the book</li>
+                            <li>Note-taking capabilities</li>
+                        </ul>
+                        
+                        <p>Students can read the entire book online, highlight important passages, and take notes directly in the reader.</p>
+                    `;
+                    
+                    readerModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Download book
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-book');
+                    const bookCard = this.closest('.book-card');
+                    const bookName = bookCard.querySelector('h3').textContent;
+                    
+                    // Simulate download
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert(`"${bookName}" has been downloaded successfully. Check your downloads folder.`);
+                        this.innerHTML = '<i class="fas fa-download"></i> Download';
+                        this.disabled = false;
+                    }, 1500);
+                });
+            });
+            
+            // Close reader
+            closeReader.addEventListener('click', function() {
+                readerModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside
+            readerModal.addEventListener('click', function(e) {
+                if (e.target === readerModal) {
+                    readerModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Page navigation
+            prevPage.addEventListener('click', function() {
+                if (currentPageNumber > 1) {
+                    currentPageNumber--;
+                    currentPage.textContent = 'Page ' + currentPageNumber;
+                    
+                    // In a real app, this would load the actual page content
+                    readerBody.innerHTML = `
+                        <h2>${readerTitle.textContent} - Page ${currentPageNumber}</h2>
+                        <p>This is content for page ${currentPageNumber} of the book. In a real implementation, each page would show the actual textbook content.</p>
+                        
+                        <p>Educational content for this page would be loaded here. Students can navigate through the book using the previous and next buttons, or jump to specific chapters.</p>
+                        
+                        <p>Page ${currentPageNumber} of ${maxPages}</p>
+                    `;
+                }
+            });
+            
+            nextPage.addEventListener('click', function() {
+                if (currentPageNumber < maxPages) {
+                    currentPageNumber++;
+                    currentPage.textContent = 'Page ' + currentPageNumber;
+                    
+                    // In a real app, this would load the actual page content
+                    readerBody.innerHTML = `
+                        <h2>${readerTitle.textContent} - Page ${currentPageNumber}</h2>
+                        <p>This is content for page ${currentPageNumber} of the book. In a real implementation, each page would show the actual textbook content.</p>
+                        
+                        <p>Educational content for this page would be loaded here. Students can navigate through the book using the previous and next buttons, or jump to specific chapters.</p>
+                        
+                        <p>Page ${currentPageNumber} of ${maxPages}</p>
+                    `;
+                }
+            });
+            
+            // Continue reading buttons
+            const continueReadingButtons = document.querySelectorAll('.continue-reading');
+            continueReadingButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookName = this.closest('.recent-book').querySelector('h4').textContent;
+                    
+                    readerTitle.textContent = bookName;
+                    currentPageNumber = 142; // Example page number
+                    currentPage.textContent = 'Page ' + currentPageNumber;
+                    totalPages.textContent = maxPages;
+                    
+                    readerBody.innerHTML = `
+                        <h2>${bookName} - Page ${currentPageNumber}</h2>
+                        <p>Continuing from where you left off. In a real implementation, this would load your actual reading position from the server.</p>
+                        
+                        <p>The system remembers your reading progress across all books. You can pick up exactly where you left off, even on different devices.</p>
+                        
+                        <p>Bookmarking functionality allows you to save specific pages or sections for later review.</p>
+                    `;
+                    
+                    readerModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Search button
+            const searchButton = document.querySelector('.search-button');
+            searchButton.addEventListener('click', function() {
+                const term = searchInput.value;
+                if (term.trim()) {
+                    alert(`Searching for: "${term}" - In a real implementation, this would filter books in real-time.`);
+                }
+            });
+            
+            // Enter key for search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
