@@ -42,7 +42,7 @@ To run this project on your local machine, follow the steps below:
    cd E-learning/LeanNest
    ```
 
-3. **Open the `index.html` file** in your browser.
+3. **Open the `home.html` file** in your browser.
 
 4. *(Optional)* If you prefer using a local server, you can use a tool like **VS Code Live Server** or run a local server with the following command:
 
@@ -51,6 +51,11 @@ To run this project on your local machine, follow the steps below:
    ```
 
 > 💡 **Note**: Since this project is static, no build or server setup is required.
+
+## 🌐 Deployed Version
+
+You can find the deployed version of the project here:
+[**E-learning Platform (Deployed Version)**](https://vision-science-fair.github.io/E-learning-test-rose-s-version-/home.html)
 
 ## 🧰 Project Structure
 
@@ -108,3 +113,9 @@ There are several features planned for future updates:
 7. **Real-Time Features**:
 
    * Implement real-time collaboration features like live chat or group discussions.
+
+---
+
+### License
+
+This project is open-source and available under the MIT License.
