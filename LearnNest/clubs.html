@@ -3,22 +3,1059 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnNest</title>
-    <link rel="stylesheet" href="style.css">
+    <title>LearnNest - Clubs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="img/i.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #4cc9f0;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        /* Clubs Hero */
+        .clubs-hero {
+            background: var(--gradient);
+            color: white;
+            padding: 140px 20px 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .clubs-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .clubs-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 40px auto 0;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Clubs Content */
+        .clubs-content {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .create-club-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .create-club-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        /* Clubs Grid */
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .club-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .club-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .club-header {
+            padding: 25px 25px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .club-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .club-category {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .club-body {
+            padding: 0 25px 20px;
+        }
+
+        .club-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .club-body p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .club-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .club-members, .club-posts {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .join-club-btn {
+            width: 100%;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .join-club-btn:hover {
+            background: var(--secondary);
+        }
+
+        .joined {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* Activities Feed */
+        .activities-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activities-feed {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .activity-post {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 20px;
+        }
+
+        .activity-post:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .activity-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .activity-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .activity-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .activity-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .activity-actions button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-actions button:hover {
+            color: var(--primary);
+        }
+
+        .post-activity {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .post-activity input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .post-activity button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 20px 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--light-blue);
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--light-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 20px;
+            }
+            .clubs-hero h1 {
+                font-size: 2.8rem;
+            }
+            .clubs-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links {
+                margin: 15px 0;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .clubs-hero {
+                padding: 120px 20px 60px;
+                margin-top: 120px;
+            }
+            .clubs-hero h1 {
+                font-size: 2.3rem;
+            }
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .filter-buttons {
+                width: 100%;
+            }
+            .activity-post {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .clubs-hero h1 {
+                font-size: 2rem;
+            }
+            .clubs-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="home.html">Home</a>
-        <a href="grades.html">Grades</a>
-        <a href="clubs.html" class="active">clubs</a>
-        <a href="videos.html">Videos</a>
-        <a href="books.html">Books</a>
-        <a href="about.html">About</a>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                LearnNest
+            </div>
+            <div class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="grades.html">Grades</a>
+                <a href="clubs.html" class="active">Clubs</a>
+                <a href="videos.html">Videos</a>
+                <a href="books.html">Books</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="log">
+                <a href="signUp.html" class="signup-btn">Sign up</a>
+            </div>
+        </div>
     </nav>
-    <div class="log">
-      <a href="signUp.html">Sign up</a>
+
+    <!-- Clubs Hero -->
+    <section class="clubs-hero">
+        <h1>Student Clubs & Activities</h1>
+        <p>Join student-led clubs, participate in activities, and connect with peers who share your interests. From robotics to debate, there's something for everyone.</p>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Search for clubs or activities...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </section>
+
+    <!-- Clubs Content -->
+    <div class="clubs-content">
+        <div class="section-title">
+            <h2>Explore Clubs</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="academic">Academic</button>
+                <button class="filter-btn" data-filter="arts">Arts</button>
+                <button class="filter-btn" data-filter="sports">Sports</button>
+                <button class="filter-btn" data-filter="tech">Tech</button>
+            </div>
+            <button class="create-club-btn" id="createClubBtn">
+                <i class="fas fa-plus"></i> Create Club
+            </button>
+        </div>
+
+        <!-- Clubs Grid -->
+        <div class="clubs-grid">
+            <!-- Club 1 -->
+            <div class="club-card" data-category="academic">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <span class="club-category">Academic</span>
+                </div>
+                <div class="club-body">
+                    <h3>Science Society</h3>
+                    <p>Explore the wonders of science through experiments, discussions, and competitions.</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>48 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>12 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn">Join Club</button>
+                </div>
+            </div>
+
+            <!-- Club 2 -->
+            <div class="club-card" data-category="arts">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <span class="club-category">Arts</span>
+                </div>
+                <div class="club-body">
+                    <h3>Creative Arts Club</h3>
+                    <p>Express yourself through painting, drawing, sculpture, and digital art.</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>36 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>8 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn joined">Joined</button>
+                </div>
+            </div>
+
+            <!-- Club 3 -->
+            <div class="club-card" data-category="tech">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <span class="club-category">Tech</span>
+                </div>
+                <div class="club-body">
+                    <h3>Programming Club</h3>
+                    <p>Learn coding, build projects, and participate in hackathons.</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>72 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>21 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn">Join Club</button>
+                </div>
+            </div>
+
+            <!-- Club 4 -->
+            <div class="club-card" data-category="sports">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-basketball-ball"></i>
+                    </div>
+                    <span class="club-category">Sports</span>
+                </div>
+                <div class="club-body">
+                    <h3>Basketball Team</h3>
+                    <p>Practice, games, and tournaments. All skill levels welcome!</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>24 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>5 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn">Join Club</button>
+                </div>
+            </div>
+
+            <!-- Club 5 -->
+            <div class="club-card" data-category="academic">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <span class="club-category">Academic</span>
+                </div>
+                <div class="club-body">
+                    <h3>Debate Society</h3>
+                    <p>Develop critical thinking and public speaking skills through debate.</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>32 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>15 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn joined">Joined</button>
+                </div>
+            </div>
+
+            <!-- Club 6 -->
+            <div class="club-card" data-category="tech">
+                <div class="club-header">
+                    <div class="club-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <span class="club-category">Tech</span>
+                </div>
+                <div class="club-body">
+                    <h3>Robotics Club</h3>
+                    <p>Design, build, and program robots for competitions.</p>
+                    <div class="club-meta">
+                        <div class="club-members">
+                            <i class="fas fa-users"></i>
+                            <span>28 members</span>
+                        </div>
+                        <div class="club-posts">
+                            <i class="fas fa-comments"></i>
+                            <span>9 new posts</span>
+                        </div>
+                    </div>
+                    <button class="join-club-btn">Join Club</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activities Feed -->
+        <h2 class="activities-title">
+            <i class="fas fa-newspaper"></i>
+            Recent Club Activities
+        </h2>
+
+        <div class="activities-feed">
+            <!-- Activity 1 -->
+            <div class="activity-post">
+                <div class="activity-avatar" style="background: linear-gradient(135deg, #4361ee, #3a0ca3);">
+                    JS
+                </div>
+                <div class="activity-content">
+                    <h4>Science Society - Upcoming Science Fair</h4>
+                    <p>Our annual science fair will be held next Friday in the main auditorium. We're looking for volunteers to help with setup and judging. Please sign up if you're available!</p>
+                    <div class="activity-meta">
+                        <span>Posted by John Smith</span>
+                        <span>2 hours ago</span>
+                    </div>
+                    <div class="activity-actions">
+                        <button><i class="far fa-thumbs-up"></i> Like (12)</button>
+                        <button><i class="far fa-comment"></i> Comment (5)</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="activity-post">
+                <div class="activity-avatar" style="background: linear-gradient(135deg, #f72585, #b5179e);">
+                    ME
+                </div>
+                <div class="activity-content">
+                    <h4>Creative Arts Club - Painting Workshop</h4>
+                    <p>Join us this Saturday for a watercolor painting workshop! All materials will be provided. No experience necessary. Please RSVP by Thursday.</p>
+                    <div class="activity-meta">
+                        <span>Posted by Maria Evans</span>
+                        <span>1 day ago</span>
+                    </div>
+                    <div class="activity-actions">
+                        <button><i class="far fa-thumbs-up"></i> Like (24)</button>
+                        <button><i class="far fa-comment"></i> Comment (8)</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 3 -->
+            <div class="activity-post">
+                <div class="activity-avatar" style="background: linear-gradient(135deg, #4cc9f0, #4361ee);">
+                    AK
+                </div>
+                <div class="activity-content">
+                    <h4>Programming Club - Hackathon Announcement</h4>
+                    <p>We're hosting a 24-hour hackathon next month! Prizes for the top 3 projects. Theme: "Solutions for Education". Registration opens next week.</p>
+                    <div class="activity-meta">
+                        <span>Posted by Alex Kim</span>
+                        <span>3 days ago</span>
+                    </div>
+                    <div class="activity-actions">
+                        <button><i class="far fa-thumbs-up"></i> Like (42)</button>
+                        <button><i class="far fa-comment"></i> Comment (17)</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post New Activity -->
+            <div class="post-activity">
+                <input type="text" id="newActivityInput" placeholder="Share an update with your club...">
+                <button id="postActivityBtn">Post</button>
+            </div>
+        </div>
     </div>
-<script src="app.js"></script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    LearnNest
+                </div>
+                <p>A Modern Nest For Growing Minds. We provide innovative tools and resources to help students excel in their academic journey.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="grades.html">Grades</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">help@learnnest.com</a></li>
+                        <li><a href="#">+1 (555) 123-4567</a></li>
+                        <li><a href="#">123 Education St.</a></li>
+                        <li><a href="#">Knowledge City, KC 10101</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LearnNest. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for growing minds</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Club Filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const clubCards = document.querySelectorAll('.club-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter clubs
+                    clubCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Join Club Buttons
+            const joinButtons = document.querySelectorAll('.join-club-btn');
+            joinButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.classList.contains('joined')) {
+                        this.classList.remove('joined');
+                        this.textContent = 'Join Club';
+                        alert('You have left the club.');
+                    } else {
+                        this.classList.add('joined');
+                        this.textContent = 'Joined';
+                        alert('You have joined the club!');
+                    }
+                });
+            });
+            
+            // Create Club Button
+            const createClubBtn = document.getElementById('createClubBtn');
+            createClubBtn.addEventListener('click', function() {
+                alert('Create Club feature would open a form in a real implementation.');
+            });
+            
+            // Post Activity
+            const postActivityBtn = document.getElementById('postActivityBtn');
+            const newActivityInput = document.getElementById('newActivityInput');
+            
+            postActivityBtn.addEventListener('click', function() {
+                const activityText = newActivityInput.value.trim();
+                if (activityText) {
+                    // In a real app, this would send to a backend
+                    alert('Activity posted: ' + activityText);
+                    newActivityInput.value = '';
+                    
+                    // Add new activity to feed (demo only)
+                    const activitiesFeed = document.querySelector('.activities-feed');
+                    const postActivityDiv = document.querySelector('.post-activity');
+                    
+                    const newActivity = document.createElement('div');
+                    newActivity.className = 'activity-post';
+                    newActivity.innerHTML = `
+                        <div class="activity-avatar" style="background: linear-gradient(135deg, #f72585, #b5179e);">
+                            YS
+                        </div>
+                        <div class="activity-content">
+                            <h4>New Activity</h4>
+                            <p>${activityText}</p>
+                            <div class="activity-meta">
+                                <span>Posted by You</span>
+                                <span>Just now</span>
+                            </div>
+                            <div class="activity-actions">
+                                <button><i class="far fa-thumbs-up"></i> Like (0)</button>
+                                <button><i class="far fa-comment"></i> Comment (0)</button>
+                                <button><i class="fas fa-share"></i> Share</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    activitiesFeed.insertBefore(newActivity, postActivityDiv);
+                } else {
+                    alert('Please enter some text for your activity.');
+                }
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                clubCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Like/Comment buttons
+            const likeButtons = document.querySelectorAll('.activity-actions button');
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const text = this.textContent;
+                    const match = text.match(/\((\d+)\)/);
+                    
+                    if (match) {
+                        let count = parseInt(match[1]);
+                        count++;
+                        this.textContent = text.replace(/\(\d+\)/, `(${count})`);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
