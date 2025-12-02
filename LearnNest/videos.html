@@ -3,22 +3,1171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnNest</title>
-    <link rel="stylesheet" href="style.css">
+    <title>LearnNest - Educational Videos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="img/i.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #4cc9f0;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --video-red: #ff0000;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        /* Videos Hero */
+        .videos-hero {
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9)), 
+                        url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 140px 20px 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .videos-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .videos-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Videos Content */
+        .videos-content {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+
+        /* Search & Filter */
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .search-container {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border-radius: var(--radius);
+            border: 2px solid #ddd;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Videos Grid */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-thumbnail {
+            height: 180px;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .video-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--video-red);
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .video-play:hover {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .video-body {
+            padding: 20px;
+        }
+
+        .video-category {
+            display: inline-block;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .video-body h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .video-views, .video-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Video Player Modal */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .video-modal-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-modal-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-modal-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .video-player-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            background: #000;
+        }
+
+        .video-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-modal-info {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .video-modal-info h2 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .video-modal-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .video-modal-description {
+            color: var(--dark);
+        }
+
+        /* Playlists */
+        .playlists-section {
+            margin-top: 80px;
+        }
+
+        .playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .playlist-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .playlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .playlist-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 30px;
+        }
+
+        .playlist-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .playlist-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .playlist-count {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 20px 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--light-blue);
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--light-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 20px;
+            }
+            .videos-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links {
+                margin: 15px 0;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .videos-hero {
+                padding: 120px 20px 60px;
+                margin-top: 120px;
+            }
+            .videos-hero h1 {
+                font-size: 2.3rem;
+            }
+            .search-filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-container {
+                width: 100%;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .videos-hero h1 {
+                font-size: 2rem;
+            }
+            .stats {
+                gap: 30px;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="home.html">Home</a>
-        <a href="grades.html">Grades</a>
-        <a href="clubs.html">clubs</a>
-        <a href="videos.html" class="active">Videos</a>
-        <a href="books.html">Books</a>
-        <a href="about.html">About</a>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                LearnNest
+            </div>
+            <div class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="grades.html">Grades</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="videos.html" class="active">Videos</a>
+                <a href="books.html">Books</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="log">
+                <a href="signUp.html" class="signup-btn">Sign up</a>
+            </div>
+        </div>
     </nav>
-    <div class="log">
-      <a href="signUp.html">Sign up</a>
+
+    <!-- Videos Hero -->
+    <section class="videos-hero">
+        <h1>Educational Videos</h1>
+        <p>Watch thousands of educational videos from expert instructors. Learn at your own pace with our curated video library.</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Educational Videos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Expert Instructors</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Subjects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">Free</div>
+                <div class="stat-label">Access for Students</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Content -->
+    <div class="videos-content">
+        <!-- Search & Filter -->
+        <div class="search-filter">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search videos by title, author, or topic...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Videos</button>
+                <button class="filter-btn" data-filter="mathematics">Mathematics</button>
+                <button class="filter-btn" data-filter="science">Science</button>
+                <button class="filter-btn" data-filter="computer">Computer Science</button>
+                <button class="filter-btn" data-filter="history">History</button>
+            </div>
+        </div>
+
+        <!-- Videos Grid -->
+        <div class="videos-grid" id="videosGrid">
+            <!-- Video cards will be loaded dynamically -->
+        </div>
+
+        <!-- Playlists Section -->
+        <div class="playlists-section">
+            <h2 class="section-title">
+                <i class="fas fa-list-ol"></i>
+                Curated Playlists
+            </h2>
+            
+            <div class="playlists-grid">
+                <div class="playlist-card">
+                    <div class="playlist-icon">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <h4>Mathematics Mastery</h4>
+                    <p>From algebra to calculus, master mathematical concepts</p>
+                    <div class="playlist-count">42 videos</div>
+                </div>
+                
+                <div class="playlist-card">
+                    <div class="playlist-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h4>Science Explained</h4>
+                    <p>Physics, chemistry, biology made simple</p>
+                    <div class="playlist-count">38 videos</div>
+                </div>
+                
+                <div class="playlist-card">
+                    <div class="playlist-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>Programming Basics</h4>
+                    <p>Learn to code from scratch</p>
+                    <div class="playlist-count">25 videos</div>
+                </div>
+                
+                <div class="playlist-card">
+                    <div class="playlist-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>Literature & Writing</h4>
+                    <p>Improve reading and writing skills</p>
+                    <div class="playlist-count">31 videos</div>
+                </div>
+            </div>
+        </div>
     </div>
-<script src="app.js"></script>
+
+    <!-- Video Player Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 id="modalTitle">Video Player</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="video-player-container" id="videoPlayer">
+                <!-- YouTube iframe will be inserted here -->
+            </div>
+            <div class="video-modal-info" id="modalInfo">
+                <!-- Video info will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    LearnNest
+                </div>
+                <p>A Modern Nest For Growing Minds. We provide innovative tools and resources to help students excel in their academic journey.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="grades.html">Grades</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">help@learnnest.com</a></li>
+                        <li><a href="#">+1 (555) 123-4567</a></li>
+                        <li><a href="#">123 Education St.</a></li>
+                        <li><a href="#">Knowledge City, KC 10101</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LearnNest. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for growing minds</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fixed video data - students cannot modify
+        const videos = [
+            {
+                id: 1,
+                title: "Introduction to Algebra",
+                youtubeId: "NybHckSEQBI",
+                category: "mathematics",
+                duration: "15:30",
+                author: "Prof. Michael Chen",
+                views: 12500,
+                description: "Learn the basics of algebra including variables, expressions, and simple equations.",
+                date: "2023-10-15"
+            },
+            {
+                id: 2,
+                title: "Physics: Newton's Laws of Motion",
+                youtubeId: "kKKM8Y-u7ds",
+                category: "science",
+                duration: "22:15",
+                author: "Dr. Sarah Williams",
+                views: 18700,
+                description: "Understanding Newton's three laws of motion with real-world examples and demonstrations.",
+                date: "2023-09-28"
+            },
+            {
+                id: 3,
+                title: "Python Programming for Beginners",
+                youtubeId: "rfscVS0vtbw",
+                category: "computer",
+                duration: "45:20",
+                author: "Alex Johnson",
+                views: 25400,
+                description: "Start your programming journey with Python. Learn basic syntax and write your first program.",
+                date: "2023-11-05"
+            },
+            {
+                id: 4,
+                title: "World War II: A Comprehensive Overview",
+                youtubeId: "Q78COTwT7nE",
+                category: "history",
+                duration: "38:45",
+                author: "Dr. Robert Miller",
+                views: 9200,
+                description: "Complete overview of World War II including key events, battles, and political developments.",
+                date: "2023-08-12"
+            },
+            {
+                id: 5,
+                title: "English Grammar: Tenses Made Easy",
+                youtubeId: "8pK5JvL1_bs",
+                category: "english",
+                duration: "18:10",
+                author: "Prof. Elizabeth Parker",
+                views: 15600,
+                description: "Master English tenses with simple explanations and practical examples.",
+                date: "2023-10-30"
+            },
+            {
+                id: 6,
+                title: "Chemistry: Periodic Table Explained",
+                youtubeId: "fPnwBITSmgU",
+                category: "science",
+                duration: "25:40",
+                author: "Dr. Jennifer Kim",
+                views: 11300,
+                description: "Understanding the periodic table, element groups, and their properties.",
+                date: "2023-11-12"
+            },
+            {
+                id: 7,
+                title: "Geometry Basics: Angles and Triangles",
+                youtubeId: "WRY8-9_8P4I",
+                category: "mathematics",
+                duration: "20:15",
+                author: "Prof. David Wilson",
+                views: 8900,
+                description: "Learn about different types of angles, triangles, and geometric proofs.",
+                date: "2023-09-15"
+            },
+            {
+                id: 8,
+                title: "Biology: Cell Structure and Function",
+                youtubeId: "URUJD5NEXC8",
+                category: "science",
+                duration: "28:30",
+                author: "Dr. Maria Rodriguez",
+                views: 14200,
+                description: "Explore the structure and function of animal and plant cells.",
+                date: "2023-10-05"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const videosGrid = document.getElementById('videosGrid');
+            const searchInput = document.querySelector('.search-bar');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const videoModal = document.getElementById('videoModal');
+            const closeModal = document.getElementById('closeModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalInfo = document.getElementById('modalInfo');
+            const searchButton = document.querySelector('.search-button');
+
+            // Initialize videos display
+            renderVideos(videos);
+
+            // Video filtering
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterVideos(filter);
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                searchVideos(this.value);
+            });
+
+            searchButton.addEventListener('click', function() {
+                searchVideos(searchInput.value);
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                closeVideoModal();
+            });
+
+            // Close modal when clicking outside
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeVideoModal();
+                }
+            });
+
+            // Functions
+            function renderVideos(videosToRender) {
+                videosGrid.innerHTML = '';
+                
+                videosToRender.forEach(video => {
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'video-card';
+                    videoCard.setAttribute('data-category', video.category);
+                    videoCard.setAttribute('data-id', video.id);
+                    
+                    // Format views with commas
+                    const formattedViews = video.views.toLocaleString();
+                    
+                    // Format date
+                    const formattedDate = new Date(video.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    videoCard.innerHTML = `
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${video.title}">
+                            <div class="video-play">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-duration">${video.duration}</div>
+                        </div>
+                        <div class="video-body">
+                            <span class="video-category">${video.category.charAt(0).toUpperCase() + video.category.slice(1)}</span>
+                            <h3>${video.title}</h3>
+                            <div class="video-meta">
+                                <div class="video-views">
+                                    <i class="fas fa-eye"></i>
+                                    <span>${formattedViews} views</span>
+                                </div>
+                                <div class="video-date">
+                                    <i class="far fa-calendar"></i>
+                                    <span>${formattedDate}</span>
+                                </div>
+                            </div>
+                            <p class="video-description">${video.description}</p>
+                            <div class="video-author">
+                                <div class="author-avatar">${getInitials(video.author)}</div>
+                                <span>${video.author}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add click event to play video
+                    videoCard.addEventListener('click', function() {
+                        playVideo(video.id);
+                    });
+                    
+                    videosGrid.appendChild(videoCard);
+                });
+            }
+
+            function filterVideos(category) {
+                if (category === 'all') {
+                    renderVideos(videos);
+                } else {
+                    const filteredVideos = videos.filter(video => video.category === category);
+                    renderVideos(filteredVideos);
+                }
+            }
+
+            function searchVideos(query) {
+                if (!query.trim()) {
+                    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                    filterVideos(activeFilter);
+                    return;
+                }
+                
+                const searchTerm = query.toLowerCase();
+                const filteredVideos = videos.filter(video => 
+                    video.title.toLowerCase().includes(searchTerm) ||
+                    video.author.toLowerCase().includes(searchTerm) ||
+                    video.description.toLowerCase().includes(searchTerm) ||
+                    video.category.toLowerCase().includes(searchTerm)
+                );
+                
+                renderVideos(filteredVideos);
+            }
+
+            function playVideo(videoId) {
+                const video = videos.find(v => v.id === videoId);
+                if (!video) return;
+                
+                // Show modal with video
+                modalTitle.textContent = video.title;
+                videoPlayer.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${video.youtubeId}?autoplay=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                `;
+                
+                modalInfo.innerHTML = `
+                    <h2>${video.title}</h2>
+                    <div class="video-modal-meta">
+                        <span><i class="fas fa-user"></i> ${video.author}</span>
+                        <span><i class="fas fa-tag"></i> ${video.category.charAt(0).toUpperCase() + video.category.slice(1)}</span>
+                        <span><i class="fas fa-clock"></i> ${video.duration}</span>
+                        <span><i class="fas fa-eye"></i> ${video.views.toLocaleString()} views</span>
+                    </div>
+                    <p class="video-modal-description">${video.description}</p>
+                `;
+                
+                videoModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeVideoModal() {
+                videoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // Stop video when modal closes
+                const iframe = videoPlayer.querySelector('iframe');
+                if (iframe) {
+                    const iframeSrc = iframe.src;
+                    iframe.src = iframeSrc.replace('autoplay=1', 'autoplay=0'); // Remove autoplay
+                }
+            }
+
+            function getInitials(name) {
+                return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+            }
+
+            // Initialize with all videos
+            filterVideos('all');
+            
+            // Add Enter key support for search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchVideos(this.value);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
