@@ -2,8 +2,8 @@ function searchGrades() {
         let input = document.getElementById("searchInput").value.toLowerCase();
         let resultsContainer = document.getElementById("searchResults");
 
-        // Example search results — you can replace them later with real subjects
-        let subjects = [
+        // Example search results — you can replace them later with real clubs
+        let clubs = [
             "Mathematics Grade 9",
             "Biology Grade 10",
             "Physics Grade 9",
@@ -14,7 +14,7 @@ function searchGrades() {
             "English Grade 10"
         ];
 
-        let filtered = subjects.filter(subject => subject.toLowerCase().includes(input));
+        let filtered = clubsilter(subject => subject.toLowerCase().includes(input));
 
         // Clear previous results
         resultsContainer.innerHTML = "";

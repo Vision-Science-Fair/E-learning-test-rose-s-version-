@@ -4,47 +4,626 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnNest</title>
-    <link rel="stylesheet" href="grades.css">
-    <link rel="icon" href="img/i.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Embedded CSS for Grade Selection Page */
+        
+        /* ===== BASE STYLES ===== */
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #7209b7;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-light: #e9ecef;
+            --gray-medium: #6c757d;
+            --success-color: #4cc9f0;
+            --border-radius: 12px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --box-shadow-hover: 0 12px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER STYLES ===== */
+        .main-header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding-bottom: 0;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        /* ===== NAVIGATION ===== */
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: var(--gray-medium);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            padding: 2rem 1rem;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 1rem 1.8rem;
+            border: none;
+            font-size: 1rem;
+            background: white;
+            outline: none;
+        }
+
+        .search-container input::placeholder {
+            color: var(--gray-medium);
+            opacity: 0.8;
+        }
+
+        .search-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: #e11570;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== GRADE CARDS ===== */
+        .grades-container {
+            margin: 3rem 0;
+        }
+
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0.5rem;
+        }
+
+        .grade-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .grade-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        /* Grade-specific colors */
+        .grade-7 {
+            border-top: 5px solid #4cc9f0;
+            animation-delay: 0.1s;
+        }
+
+        .grade-8 {
+            border-top: 5px solid #7209b7;
+            animation-delay: 0.2s;
+        }
+
+        .grade-9 {
+            border-top: 5px solid #f72585;
+            animation-delay: 0.3s;
+        }
+
+        .grade-10 {
+            border-top: 5px solid #4361ee;
+            animation-delay: 0.4s;
+        }
+
+        .grade-11 {
+            border-top: 5px solid #3a0ca3;
+            animation-delay: 0.5s;
+        }
+
+        /* Card header */
+        .grade-card-header {
+            padding: 2rem 1.5rem 1rem;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grade-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Grade-specific icon colors */
+        .grade-7 .grade-icon { color: #4cc9f0; }
+        .grade-8 .grade-icon { color: #7209b7; }
+        .grade-9 .grade-icon { color: #f72585; }
+        .grade-10 .grade-icon { color: #4361ee; }
+        .grade-11 .grade-icon { color: #3a0ca3; }
+
+        .grade-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0.2rem 0;
+            color: var(--dark-color);
+        }
+
+        .grade-label {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* Card content */
+        .grade-card-content {
+            padding: 0 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .grade-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .grade-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.03);
+        }
+
+        .grade-btn i {
+            font-size: 1rem;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Staggered animation for cards */
+        .grades-grid > *:nth-child(1) { animation-delay: 0.1s; }
+        .grades-grid > *:nth-child(2) { animation-delay: 0.2s; }
+        .grades-grid > *:nth-child(3) { animation-delay: 0.3s; }
+        .grades-grid > *:nth-child(4) { animation-delay: 0.4s; }
+        .grades-grid > *:nth-child(5) { animation-delay: 0.5s; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .grades-grid {
+                grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+                gap: 1.8rem;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.2rem 1rem;
+            }
+            
+            .main-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                border-radius: var(--border-radius);
+            }
+            
+            .search-container input,
+            .search-btn {
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .search-btn {
+                padding: 0.8rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .main-content {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+            
+            .grades-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grades-grid {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin: 0 auto;
+                gap: 1.2rem;
+            }
+            
+            .grade-card {
+                height: 220px;
+            }
+            
+            .grade-number {
+                font-size: 3rem;
+            }
+            
+            .grade-icon {
+                font-size: 2.5rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-nav a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .grade-card {
+                height: 200px;
+            }
+            
+            .grade-card-header {
+                padding: 1.5rem 1rem 0.8rem;
+            }
+            
+            .grade-number {
+                font-size: 2.8rem;
+            }
+            
+            .grade-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="home.html" class="active">Home</a>
-        <a href="grades.html">Grades</a>
-        <a href="#">Subjects</a>
-        <a href="#">Videos</a>
-        <a href="#">Books</a>
-        <a href="#">About</a>
-    </nav>
-    <div class="log">
-      <a href="signUp.html">Sign up</a>
-    </div>
-    <div class="title">
-        <h1 class="heading">Choose Your Grade</h1>
-    </div>
-    <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search...">
-    <button onclick="searchGrades()">Search</button>
-</div>
-<div id="searchResults"></div>
-    <div class="division-1">
-        <div class="grade-7">
-            <img class="grade-7-icon" src="img/grade-7-icon.png">
-            <p class="grade-7-title">Grade 7</p>
-            <p class="grade-7-description">View Subjects</p>
+    <!-- HEADER with Search -->
+    <header class="main-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>Learn<span>Nest</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="grades.html" class="active">Grades</a></li>
+                    <li><a href="clubs.html">clubs</a></li>
+                    <li><a href="videos.html">Videos</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="grade-8">
-            <img class="grade-8-icon" src="img/grade-8-icon.png">
-            <p class="grade-8-title">Grade 8</p>
-            <p class="grade-8-description">View Subjects</p>
+        
+        <!-- SEARCH BAR - Prominently placed -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" placeholder="Search for lessons, topics, or resources...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
-        <div class="grade-9"></div>
-    </div>
-    <div class="division-2">
-        <div class="grade-10"></div>
-        <div class="grade-11"></div>
-        <div class="grade-12"></div>
-    </div>
-<script src="grades.js"></script>
-</body>
-</html>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- Visual Hierarchy: Clear page header -->
+        <div class="page-header">
+            <h1 class="page-title">Choose Your Grade Level</h1>
+            <p class="page-subtitle">Select your grade to access tailored learning materials, interactive lessons, and curriculum-aligned resources.</p>
+        </div>
+
+        <!-- GRADE CARDS with Visual Emphasis -->
+        <section class="grades-container">
+            <div class="grades-grid">
+                <!-- Grade 7 -->
+                <div class="grade-card grade-7">
+                    <div class="grade-card-header">
+                        <i class="fas fa-seedling grade-icon"></i>
+                        <div class="grade-number">7</div>
+                        <div class="grade-label">Foundation Year</div>
+                    </div>
+                    <div class="grade-card-content">
+                        <button class="grade-btn">
+                            <i class="fas fa-door-open"></i>
+                            Enter Grade 7
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grade 8 -->
+                <div class="grade-card grade-8">
+                    <div class="grade-card-header">
+                        <i class="fas fa-rocket grade-icon"></i>
+                        <div class="grade-number">8</div>
+                        <div class="grade-label">Building Skills</div>
+                    </div>
+                    <div class="grade-card-content">
+                        <button class="grade-btn">
+                            <i class="fas fa-door-open"></i>
+                            Enter Grade 8
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grade 9 -->
+                <div class="grade-card grade-9">
+                    <div class="grade-card-header">
+                        <i class="fas fa-flask grade-icon"></i>
+                        <div class="grade-number">9</div>
+                        <div class="grade-label">High School Start</div>
+                    </div>
+                    <div class="grade-card-content">
+                        <button class="grade-btn">
+                            <i class="fas fa-door-open"></i>
+                            Enter Grade 9
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grade 10 -->
+                <div class="grade-card grade-10">
+                    <div class="grade-card-header">
+                        <i class="fas fa-globe-americas grade-icon"></i>
+                        <div class="grade-number">10</div>
+                        <div class="grade-label">Advanced Concepts</div>
+                    </div>
+                    <div class="grade-card-content">
+                        <button class="grade-btn">
+                            <i class="fas fa-door-open"></i>
+                            Enter Grade 10
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grade 11 -->
+                <div class="grade-card grade-11">
+                    <div class="grade-card-header">
+                        <i class="fas fa-chart-line grade-icon"></i>
+                        <div class="grade-number">11</div>
+                        <div class="grade-label">College Prep</div>
+                    </div>
+                    <div class="grade-card-content">
+                        <button class="grade-btn">
+                            <i class="fas fa-door-open"></i>
+                            Enter Grade 11
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    // Search functionality
+    document.querySelector('.search-btn').addEventListener('click', performSearch);
+    document.querySelector('.search-container input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSearch();
+    });
+
+    function performSearch() {
+        const query = document.querySelector('.search-container input').value.trim();
+        if (query) {
+            alert(`Searching for: "${query}"\nIn a real application, this would redirect to search results.`);
+            // window.location.href = `/search?q=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // Grade card click handlers - Now redirects to actual pages
+    document.querySelectorAll('.grade-btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            const grade = index + 7;
+            // Redirect to the corresponding grade page
+            window.location.href = `grades/grade${grade}.html`;
+        });
+    });
+
+    // Make the entire grade card clickable
+    document.querySelectorAll('.grade-card').forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+            // Don't trigger if clicking the button (to avoid double redirect)
+            if (!e.target.closest('.grade-btn')) {
+                const grade = index + 7;
+                window.location.href = `grades/grade${grade}.html`;
+            }
+        });
+        
+        // Add pointer cursor to indicate it's clickable
+        card.style.cursor = 'pointer';
+    });
+
+    // Add hover effects
+    document.querySelectorAll('.grade-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.zIndex = '10';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.zIndex = '1';
+        });
+    });
+</script>
