@@ -112,16 +112,42 @@
             color: var(--primary);
         }
 
-        .signup-btn {
-            background: var(--gradient-accent);
-            color: white;
-            border: none;
+        /* Auth Buttons Container */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .login-btn, .signup-btn {
             padding: 10px 25px;
             border-radius: var(--radius);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .login-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
         }
 
         .signup-btn:hover {
@@ -561,9 +587,12 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
+            .auth-buttons {
+                margin-top: 10px;
+            }
             .clubs-hero {
                 padding: 120px 20px 60px;
-                margin-top: 120px;
+                margin-top: 140px;
             }
             .clubs-hero h1 {
                 font-size: 2.3rem;
@@ -599,6 +628,14 @@
             .nav-links a {
                 font-size: 14px;
             }
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 200px;
+            }
+            .login-btn, .signup-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -618,7 +655,8 @@
                 <a href="books.html">Books</a>
                 <a href="about.html">About</a>
             </div>
-            <div class="log">
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Log In</a>
                 <a href="signUp.html" class="signup-btn">Sign up</a>
             </div>
         </div>
@@ -1054,6 +1092,24 @@
                         this.textContent = text.replace(/\(\d+\)/, `(${count})`);
                     }
                 });
+            });
+
+            // Auth button animations
+            const loginBtn = document.querySelector('.login-btn');
+            const signupBtn = document.querySelector('.signup-btn');
+            
+            loginBtn.addEventListener('click', function(e) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    this.innerHTML = 'Log In';
+                }, 1000);
+            });
+            
+            signupBtn.addEventListener('click', function(e) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    this.innerHTML = 'Sign up';
+                }, 1000);
             });
         });
     </script>

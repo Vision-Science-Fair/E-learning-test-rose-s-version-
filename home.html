@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnNest - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/i.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #4cc9f0;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        /* Auth Buttons Container */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .login-btn, .signup-btn {
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .login-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .signup-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .text {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        .start-btn-container {
+            margin-top: 30px;
+        }
+
+        .button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Features Preview */
+        .features-preview {
+            padding: 100px 20px;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 35px 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .feature-icon i {
+            font-size: 30px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 20px 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--light-blue);
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--light-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 20px;
+            }
+            .title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            .nav-links {
+                margin: 15px 0;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            .hero {
+                margin-top: 140px;
+                height: auto;
+                padding: 60px 20px;
+            }
+            .title {
+                font-size: 2.5rem;
+            }
+            .text {
+                font-size: 1.2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .title {
+                font-size: 2rem;
+            }
+            .text {
+                font-size: 1rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 200px;
+            }
+            .login-btn, .signup-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                LearnNest
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="active">Home</a>
+                <a href="grades.html">Grades</a>
+                <a href="clubs.html">Clubs</a>
+                <a href="videos.html">Videos</a>
+                <a href="books.html">Books</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Log In</a>
+                <a href="signUp.html" class="signup-btn">Sign up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="title">LearnNest</h1>
+            <p class="text">A Modern Nest For Growing Minds</p>
+            <div class="start-btn-container">
+                <button class="button" onclick="window.location.href='grades.html'">
+                    <i class="fas fa-rocket"></i> Get Started
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Preview -->
+    <section class="features-preview">
+        <div class="section-title">
+            <h2>Everything You Need To Succeed</h2>
+            <p>LearnNest combines all essential educational tools in one seamless platform</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Track Grades</h3>
+                <p>Monitor your academic performance with real-time grade tracking and detailed analytics.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Join Clubs</h3>
+                <p>Connect with like-minded peers through academic and extracurricular clubs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3>Educational Videos</h3>
+                <p>Access thousands of educational videos covering a wide range of subjects and topics.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Digital Library</h3>
+                <p>Explore our extensive collection of digital books, textbooks, and research materials.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    LearnNest
+                </div>
+                <p>A Modern Nest For Growing Minds. We provide innovative tools and resources to help students excel in their academic journey.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="grades.html">Grades</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">help@learnnest.com</a></li>
+                        <li><a href="#">+1 (555) 123-4567</a></li>
+                        <li><a href="#">123 Education St.</a></li>
+                        <li><a href="#">Knowledge City, KC 10101</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LearnNest. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for growing minds</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get Started button animation
+            const getStartedBtn = document.querySelector('.button');
+            getStartedBtn.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                    // Navigation will happen via onclick attribute
+                }, 1000);
+            });
+            
+            // Nav links active state
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't prevent default for actual navigation
+                    if (this.getAttribute('href') === '#' || this.getAttribute('href') === '') {
+                        e.preventDefault();
+                    }
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Feature cards animation on scroll
+            const featureCards = document.querySelectorAll('.feature-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            featureCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+
+            // Auth button animations
+            const loginBtn = document.querySelector('.login-btn');
+            const signupBtn = document.querySelector('.signup-btn');
+            
+            loginBtn.addEventListener('click', function(e) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    this.innerHTML = 'Log In';
+                }, 1000);
+            });
+            
+            signupBtn.addEventListener('click', function(e) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    this.innerHTML = 'Sign up';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
