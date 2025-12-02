@@ -1,68 +1,79 @@
-# E‑learning  
+# 📚 E-Learning Platform
 
-> The e‑learning application made for the science fair competition  
+> A simple front-end e-learning application developed for a science fair competition.
 
-## ⭐ What is this  
-E‑learning is a web application built as part of a science fair project. It aims to provide an online learning platform — offering a structured environment for courses, lessons, or learning materials.  
+## ⭐ Overview
 
-## 🎯 Motivation & Purpose  
-- To create a functional learning‑management system (LMS) for students and/or teachers.  
-- To explore web development technologies and best practices (HTML, CSS, JavaScript) through a real project.  
-- To have a portable, easy-to-understand e-learning platform that can be adapted or extended in the future.  
+**E-learning** is a web-based platform created as part of a science fair project. It provides a structured space for students to access lessons, courses, and learning materials — built entirely with standard web technologies.
 
-## 📦 Tech Stack  
-This project is built using:  
-- **HTML** — for static pages and structure  
-- **CSS** — for styling and layout  
-- **JavaScript** — for front‑end logic and interactivity  
+## 🎯 Purpose & Motivation
 
-(As of now, no backend or database is included. Future enhancements may integrate a backend/server and persistent storage.)  
+* Build a functional **learning-management system (LMS)** prototype.
+* Practice and explore web development (HTML, CSS, JavaScript).
+* Create a simple and extendable front-end project for future upgrades.
 
-## 🚀 How to Use / Run Locally  
+## 📦 Tech Stack
 
-1. Clone this repository:  
+This project uses:
+
+* **HTML** — page structure
+* **CSS** — layout and styling
+* **JavaScript** — front-end behavior and interactivity
+
+> *(No backend or database is included at this stage.)*
+
+## 🚀 Running the Project Locally
+
+1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/Vision-Science-Fair/E-learning.git
-   ```  
-2. Navigate into the project folder:  
+   ```
+
+2. **Navigate into the project directory:**
+
    ```bash
-   cd E-learning
-   ```  
-3. Open the main HTML file (e.g. `index.html` or whichever page is the entry point) in your web browser.  
-4. (Optional) If you plan to serve via a local static server (e.g. using VSCode Live Server or `npx serve`), start the server and navigate to `http://localhost:<port>`.  
+   cd E-learning/LeanNest
+   ```
 
-> 💡 Since the project currently consists of static assets (HTML/CSS/JS), no build or compilation steps are needed.  
+3. **Open the main HTML file** (usually `index.html`) in your browser.
 
-## 🧰 Project Structure  
+4. *(Optional)* Serve via a local static server such as VS Code Live Server or:
+
+   ```bash
+   npx serve
+   ```
+
+> 💡 The project is fully static — no build steps required.
+
+## 🧰 Project Structure
 
 ```
 E-learning/
-├── <!-- e.g. index.html, or other HTML pages -->
-├── styles/        # (if any) CSS files
-├── scripts/       # (if any) JavaScript files
-└── assets/        # (if any) images, fonts, media, etc.
-```  
+└── LeanNest/
+    ├── index.html          # main HTML entry page
+    ├── styles/             # CSS files
+    ├── scripts/            # JavaScript files
+    └── assets/             # images, icons, fonts, etc.
+```
 
-*(Adjust above structure based on your actual folder layout.)*  
+## ✅ Current Status
 
-## ✅ Current Status & Limitations  
+* ✔️ Static front-end is functional
+* ❌ No backend or database
+* ❌ No login system or user roles
+* ❌ Course content must be added manually (static)
 
-- ✅ Static front‑end is working (HTML, CSS, JS)  
-- ❗ No backend or database — data (users, courses, progress) is not persisted  
-- ❗ No authentication, no dynamic user roles (student/teacher/admin)  
-- ❗ No course upload, no content management — all content must be hardcoded/static for now  
+This makes the project a **front-end prototype**, not a full LMS.
 
-This means E‑learning in its current state works as a **static prototype / front-end demonstration**.  
+## 🚧 Future Improvements
 
-## 🚧 Possible Future Improvements  
+Potential upgrades for later development:
 
-If you decide to extend the project, here are features to consider:  
-
-- Add backend (Node.js + Express) + database (e.g. MongoDB) to store users, courses, progress.  
-- Implement authentication (signup/login) and user roles (student / teacher / admin).  
-- Build UI for course creation/upload (by teachers) and enrollment (by students).  
-- Add course progress tracking, quizzes or assignments.  
-- Improve UI/UX — responsive design, better navigation, styling.  
-- Add documentation/comments in code, modularize JS, consider using a framework or templating to scale.  
-
-
+* Backend (Node.js + Express) + database (MongoDB, PostgreSQL, etc.)
+* User authentication (login/signup) and roles (student/teacher/admin)
+* Course creation/upload interface
+* Enrollment and progress tracking
+* Quizzes, assignments, and interactive activities
+* Improved UI/UX and responsive layout
+* More modular JavaScript or migration to a framework (React, Vue, etc.)
